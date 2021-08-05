@@ -3,7 +3,7 @@ use macroquad::prelude::*;
 
 pub enum Rectangle_function {
     Container,
-    ColorChangeButton(Color),
+    ColorChangeButton,
     Tile
 }
 pub struct Rectangle {
@@ -12,16 +12,11 @@ pub struct Rectangle {
     width: f32,
     height: f32,
     color: Color ,
-
+    pub contains: Vec<Vec<Rectangle>>,
     function_kind: Rectangle_function,
 
 
 }
-pub struct Container {
-    rectangle: Rectangle,
-    vec: Vec<Vec<Rectangle>>
-}
-
 
 impl Rectangle {
     pub fn new(xpos: f32, ypos: f32, width: f32, height: f32, color: Color, function_kind: Rectangle_function) -> Rectangle {
@@ -31,30 +26,18 @@ impl Rectangle {
             width,
             height,
             color,
-
+            contains: Vec::new(),
             function_kind
 
         }
     }
 
-    pub fn new_Container(xpos: f32, ypos: f32, width: f32, height: f32, color: Color, function_kind: Rectangle_function) -> Container{
-        Container {
-            rectangle: Rectangle {
-                xpos,
-                ypos,
-                width,
-                height,
-                color,
-                function_kind
-            },
-            vec: Vec<Vec<Rectangle>>
-        }
-    }
+
 
     fn function(&mut self,  color: &mut Color) {
         match self.function_kind {
             Rectangle_function::Container => println!("HELLO"),
-            Rectangle_function::ColorChangeButton(GREEN) => *color = GREEN,
+            Rectangle_function::ColorChangeButton=> *color = GREEN,
             Rectangle_function::Tile => self.color = *color,
         }
     }
@@ -68,11 +51,14 @@ impl Rectangle {
     }
 
 
+
+
+
     pub fn draw(&mut self, color: &mut Color){
         draw_rectangle(self.xpos, self.ypos, self.width, self.height, self.color);
 
         for y in self.contains.iter_mut() {
-            for x in y{
+            for x in y {
                 draw_rectangle(x.xpos, x.ypos, x.width, x.height, x.color);
 
                 if x.mouse_hover() == true {
@@ -90,6 +76,6 @@ impl Rectangle {
                 }
             }
         }
-
     }
+
 }

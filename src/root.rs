@@ -14,10 +14,10 @@ pub struct Main {
 impl Main {
     pub fn new() -> Main{
         Main{
-            Canvas: rect::Rectangle::new_Container(150.0, 0.0, 500.0, 500.0,
+            Canvas: rect::Rectangle::new(150.0, 0.0, 500.0, 500.0,
                                             BLUE,
                                             rect::Rectangle_function::Container),
-            Options: rect::Rectangle::new_Container(0.0, 500.0, 800.0, 100.0,
+            Options: rect::Rectangle::new(0.0, 500.0, 800.0, 100.0,
                                             GREEN,
                                             rect::Rectangle_function::Container),
             color: BLACK
