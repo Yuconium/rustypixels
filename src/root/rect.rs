@@ -12,11 +12,56 @@ pub struct Rectangle {
     width: f32,
     height: f32,
     color: Color ,
-    pub contains: Vec<Vec<Rectangle>>,
+
     function_kind: Rectangle_function,
 
 
 }
+pub struct Container {
+    pub rect: Rectangle,
+    pub contains: Vec<Vec<Rectangle>>
+}
+
+
+impl Container {
+    pub fn new(xpos: f32, ypos: f32, width: f32, height: f32, color: Color, function_kind: Rectangle_function) -> Container {
+        Container {
+            rect: Rectangle {
+                xpos,
+                ypos,
+                width,
+                height,
+                color,
+                function_kind
+            },
+            contains: Vec::new()
+        }
+    }
+    pub fn draw(&mut self, color: &mut Color){
+        draw_rectangle(self.rect.xpos, self.rect.ypos, self.rect.width, self.rect.height, self.rect.color);
+
+        for y in self.contains.iter_mut() {
+            for x in y {
+                draw_rectangle(x.xpos, x.ypos, x.width, x.height, x.color);
+
+                if x.mouse_hover() == true {
+                    draw_line(x.xpos, x.ypos, x.xpos + x.width, x.ypos, 5.0, GREEN);
+                    draw_line(x.xpos, x.ypos, x.xpos, x.ypos + x.height, 5.0, RED);
+                    draw_line(x.xpos, x.ypos + x.height, x.xpos + x.width, x.ypos + x.height, 8.0, MAGENTA);
+                    draw_line(x.xpos + x.width, x.ypos, x.xpos + x.width, x.ypos + x.height, 5.0, YELLOW);
+
+                    if is_mouse_button_down(MouseButton::Left) {
+                        x.function(color);
+                    }   else if is_mouse_button_down(MouseButton::Right) {
+                        x.color = BLUE;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
 
 impl Rectangle {
     pub fn new(xpos: f32, ypos: f32, width: f32, height: f32, color: Color, function_kind: Rectangle_function) -> Rectangle {
@@ -26,7 +71,7 @@ impl Rectangle {
             width,
             height,
             color,
-            contains: Vec::new(),
+
             function_kind
 
         }
@@ -54,28 +99,6 @@ impl Rectangle {
 
 
 
-    pub fn draw(&mut self, color: &mut Color){
-        draw_rectangle(self.xpos, self.ypos, self.width, self.height, self.color);
 
-        for y in self.contains.iter_mut() {
-            for x in y {
-                draw_rectangle(x.xpos, x.ypos, x.width, x.height, x.color);
-
-                if x.mouse_hover() == true {
-                    draw_line(x.xpos, x.ypos, x.xpos + x.width, x.ypos, 5.0, GREEN);
-                    draw_line(x.xpos, x.ypos, x.xpos, x.ypos + x.height, 5.0, RED);
-                    draw_line(x.xpos, x.ypos + x.height, x.xpos + x.width, x.ypos + x.height, 8.0, MAGENTA);
-                    draw_line(x.xpos + x.width, x.ypos, x.xpos + x.width, x.ypos + x.height, 5.0, YELLOW);
-
-                    if is_mouse_button_down(MouseButton::Left) {
-                        x.function(color);
-                    }   else if is_mouse_button_down(MouseButton::Right) {
-                        x.color = BLUE;
-                    }
-
-                }
-            }
-        }
-    }
 
 }
