@@ -1,0 +1,12 @@
+Rusty Pixels 0.1
+
+
+1 - Tiles can be drawn with a Color
+
+2 - The Color with which the Tiles been drawn can change
+
+3 - Buttons can change the color
+
+4 - A Button can drawn on a Spritesheet
+
+5 - The Spritesheet can be saved
