@@ -5,8 +5,8 @@ pub mod rect;
 const TILESIZE: f32 = 25.0;
 
 pub struct Main {
-    Canvas: rect::Rectangle,
-    Options: rect::Rectangle,
+    Canvas: rect::Container,
+    Options: rect::Container,
     color: Color
 }
 
@@ -14,10 +14,10 @@ pub struct Main {
 impl Main {
     pub fn new() -> Main{
         Main{
-            Canvas: rect::Rectangle::new(150.0, 0.0, 500.0, 500.0,
+            Canvas: rect::Container::new(150.0, 0.0, 500.0, 500.0,
                                             BLUE,
                                             rect::Rectangle_function::Container),
-            Options: rect::Rectangle::new(0.0, 500.0, 800.0, 100.0,
+            Options: rect::Container::new(0.0, 500.0, 800.0, 100.0,
                                             GREEN,
                                             rect::Rectangle_function::Container),
             color: BLACK
@@ -33,8 +33,8 @@ impl Main {
             self.Canvas.contains.push(Vec::new());
             for x in 0..field_size as usize {
                 self.Canvas.contains[y]
-                    .push(rect::Rectangle::new(self.Canvas.xpos + xpos,
-                                                self.Canvas.ypos + ypos,
+                    .push(rect::Rectangle::new(self.Canvas.rect.xpos + xpos,
+                                                self.Canvas.rect.ypos + ypos,
                                                 TILESIZE,
                                                 TILESIZE,
                                                 BLUE,
